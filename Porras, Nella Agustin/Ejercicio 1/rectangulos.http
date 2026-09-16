@@ -1,0 +1,14 @@
+### Crear un rectangulo
+@url = http://localhost:3000
+
+POST {{url}}/rectangulos
+Content-Type: application/json
+
+{
+  "base": 10,
+  "altura": 5
+}
+
+### Listar todos
+
+GET {{url}}/rectangulos
