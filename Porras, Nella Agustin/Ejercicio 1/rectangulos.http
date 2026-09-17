@@ -1,14 +1,124 @@
-### Crear un rectangulo
 @url = http://localhost:3000
 
+### Crear un cuadrado (201)
 POST {{url}}/rectangulos
 Content-Type: application/json
 
 {
-  "base": 10,
+  "base": 5,
   "altura": 5
 }
 
-### Listar todos
+### Crear un rectangulo no cuadrado (201)
+POST {{url}}/rectangulos
+Content-Type: application/json
 
+{
+  "base": 3,
+  "altura": 7
+}
+
+### Crear con base negativa (400)
+POST {{url}}/rectangulos
+Content-Type: application/json
+
+{
+  "base": -2,
+  "altura": 5
+}
+
+### Crear con altura en cero (400)
+POST {{url}}/rectangulos
+Content-Type: application/json
+
+{
+  "base": 5,
+  "altura": 0
+}
+
+### Crear sin la clave altura (400)
+POST {{url}}/rectangulos
+Content-Type: application/json
+
+{
+  "base": 5
+}
+
+### Crear con base como string (400)
+POST {{url}}/rectangulos
+Content-Type: application/json
+
+{
+  "base": "10",
+  "altura": 5
+}
+
+### Crear sin body (400)
+POST {{url}}/rectangulos
+Content-Type: application/json
+
+### Listar todos (200)
 GET {{url}}/rectangulos
+
+### Listar solo los cuadrados (200)
+GET {{url}}/rectangulos?cuadrado=true
+
+### Listar solo los no cuadrados (200)
+GET {{url}}/rectangulos?cuadrado=false
+
+### Listar con valor de query invalido (400)
+GET {{url}}/rectangulos?cuadrado=banana
+
+### Obtener un rectangulo por id (200)
+GET {{url}}/rectangulos/1
+
+### Obtener un rectangulo inexistente (404)
+GET {{url}}/rectangulos/999
+
+### Obtener con id no numerico (400)
+GET {{url}}/rectangulos/1abc
+
+### Actualizar un rectangulo (200)
+PUT {{url}}/rectangulos/2
+Content-Type: application/json
+
+{
+  "base": 10,
+  "altura": 8
+}
+
+### Actualizar con id invalido (400)
+PUT {{url}}/rectangulos/2s
+Content-Type: application/json
+
+{
+  "base": 10,
+  "altura": 8
+}
+
+### Actualizar un rectangulo inexistente (404)
+PUT {{url}}/rectangulos/999
+Content-Type: application/json
+
+{
+  "base": 10,
+  "altura": 8
+}
+
+### Actualizar con valores invalidos (400)
+PUT {{url}}/rectangulos/2
+Content-Type: application/json
+
+{
+  "base": -10,
+  "altura": 8
+}
+
+### Eliminar un rectangulo (200)
+DELETE {{url}}/rectangulos/1
+
+### Eliminar el mismo rectangulo otra vez (404)
+DELETE {{url}}/rectangulos/1
+
+### Eliminar con id invalido (400)
+DELETE {{url}}/rectangulos/3s
