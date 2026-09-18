@@ -1,0 +1,203 @@
+@url = http://localhost:3000
+
+### Crear una tarea pendiente (201)
+POST {{url}}/tareas
+Content-Type: application/json
+
+{
+  "nombre": "Estudiar Express"
+}
+
+### Crear una tarea completada (201)
+POST {{url}}/tareas
+Content-Type: application/json
+
+{
+  "nombre": "Hacer el fork",
+  "completada": true
+}
+
+### Crear otra tarea pendiente (201)
+POST {{url}}/tareas
+Content-Type: application/json
+
+{
+  "nombre": "Crear el pull request",
+  "completada": false
+}
+
+### Crear con nombre repetido (409)
+POST {{url}}/tareas
+Content-Type: application/json
+
+{
+  "nombre": "Estudiar Express"
+}
+
+### Crear con nombre repetido en otras mayusculas y con espacios (409)
+POST {{url}}/tareas
+Content-Type: application/json
+
+{
+  "nombre": "  estudiar EXPRESS  "
+}
+
+### Crear sin nombre (400)
+POST {{url}}/tareas
+Content-Type: application/json
+
+{
+  "completada": false
+}
+
+### Crear con nombre vacio (400)
+POST {{url}}/tareas
+Content-Type: application/json
+
+{
+  "nombre": "   "
+}
+
+### Crear con nombre numerico (400)
+POST {{url}}/tareas
+Content-Type: application/json
+
+{
+  "nombre": 123
+}
+
+### Crear con completada como string (400)
+POST {{url}}/tareas
+Content-Type: application/json
+
+{
+  "nombre": "Leer el enunciado",
+  "completada": "true"
+}
+
+### Crear sin body (400)
+POST {{url}}/tareas
+Content-Type: application/json
+
+### Listar todas (200)
+GET {{url}}/tareas
+
+### Listar solo las completadas (200)
+GET {{url}}/tareas?completada=true
+
+### Listar solo las pendientes (200)
+GET {{url}}/tareas?completada=false
+
+### Listar con valor de query invalido (400)
+GET {{url}}/tareas?completada=banana
+
+### Obtener una tarea por id (200)
+GET {{url}}/tareas/1
+
+### Obtener una tarea inexistente (404)
+GET {{url}}/tareas/999
+
+### Obtener con id no numerico (400)
+GET {{url}}/tareas/1abc
+
+### Reemplazar una tarea (200)
+PUT {{url}}/tareas/3
+Content-Type: application/json
+
+{
+  "nombre": "Crear el pull request a master",
+  "completada": false
+}
+
+### Reemplazar manteniendo su propio nombre (200)
+PUT {{url}}/tareas/3
+Content-Type: application/json
+
+{
+  "nombre": "Crear el pull request a master",
+  "completada": true
+}
+
+### Reemplazar con el nombre de otra tarea (409)
+PUT {{url}}/tareas/3
+Content-Type: application/json
+
+{
+  "nombre": "Hacer el fork",
+  "completada": true
+}
+
+### Reemplazar sin enviar completada (400)
+PUT {{url}}/tareas/3
+Content-Type: application/json
+
+{
+  "nombre": "Otra tarea"
+}
+
+### Reemplazar una tarea inexistente (404)
+PUT {{url}}/tareas/999
+Content-Type: application/json
+
+{
+  "nombre": "Otra tarea",
+  "completada": false
+}
+
+### Reemplazar con id invalido (400)
+PUT {{url}}/tareas/3s
+Content-Type: application/json
+
+{
+  "nombre": "Otra tarea",
+  "completada": false
+}
+
+### Marcar una tarea como completada (200)
+PATCH {{url}}/tareas/1
+Content-Type: application/json
+
+{
+  "completada": true
+}
+
+### Marcar una tarea como pendiente (200)
+PATCH {{url}}/tareas/1
+Content-Type: application/json
+
+{
+  "completada": false
+}
+
+### Cambiar estado con valor invalido (400)
+PATCH {{url}}/tareas/1
+Content-Type: application/json
+
+{
+  "completada": "si"
+}
+
+### Cambiar estado de una tarea inexistente (404)
+PATCH {{url}}/tareas/999
+Content-Type: application/json
+
+{
+  "completada": true
+}
+
+### Eliminar una tarea (200)
+DELETE {{url}}/tareas/2
+
+### Eliminar la misma tarea otra vez (404)
+DELETE {{url}}/tareas/2
+
+### Eliminar con id invalido (400)
+DELETE {{url}}/tareas/2s
+
+### Crear una tarea con el nombre de una eliminada (201)
+POST {{url}}/tareas
+Content-Type: application/json
+
+{
+  "nombre": "Hacer el fork"
+}
