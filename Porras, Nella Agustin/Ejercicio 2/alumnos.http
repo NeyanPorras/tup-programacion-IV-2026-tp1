@@ -1,0 +1,202 @@
+@url = http://localhost:3000
+
+
+### Crear un alumno promocionado (201)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+{
+  "nombre": "Bob Esponja",
+  "notas": [7.5, 8.5, 8]
+}
+
+### Crear un alumno reprobado (201)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+{
+  "nombre": "Patricio Estrella",
+  "notas": [4, 5, 4]
+}
+
+### Crear un alumno aprobado (201)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+{
+  "nombre": "Arenita Mejillas",
+  "notas": [6, 7, 6]
+}
+
+### Crear con nombre duplicado exacto (409)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+{
+  "nombre": "Bob Esponja",
+  "notas": [5, 5, 5]
+}
+
+### Crear con nombre duplicado en otra capitalizacion y espacios (409)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+{
+  "nombre": "  bob esponja  ",
+  "notas": [5, 5, 5]
+}
+
+### Crear con nombre vacio (400)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+{
+  "nombre": "   ",
+  "notas": [5, 5, 5]
+}
+
+### Crear con nombre que no es string (400)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+{
+  "nombre": 123,
+  "notas": [5, 5, 5]
+}
+
+### Crear con notas que no son un arreglo (400)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+{
+  "nombre": "Calamardo Tentaculos",
+  "notas": 7
+}
+
+### Crear con menos de tres notas (400)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+{
+  "nombre": "Calamardo Tentaculos",
+  "notas": [5, 5]
+}
+
+### Crear con mas de tres notas (400)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+{
+  "nombre": "Calamardo Tentaculos",
+  "notas": [5, 5, 5, 5]
+}
+
+### Crear con una nota como string (400)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+{
+  "nombre": "Calamardo Tentaculos",
+  "notas": ["7", 5, 5]
+}
+
+### Crear con una nota fuera del rango 0-10 (400)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+{
+  "nombre": "Calamardo Tentaculos",
+  "notas": [11, 5, 5]
+}
+
+### Crear con una nota negativa (400)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+{
+  "nombre": "Calamardo Tentaculos",
+  "notas": [-1, 5, 5]
+}
+
+### Crear sin body (400)
+POST {{url}}/alumnos
+Content-Type: application/json
+
+### Listar todos los alumnos (200)
+GET {{url}}/alumnos
+
+### Obtener un alumno con su promedio y condicion (200)
+GET {{url}}/alumnos/1
+
+### Obtener un alumno inexistente (404)
+GET {{url}}/alumnos/999
+
+### Obtener con id no numerico (400)
+GET {{url}}/alumnos/1abc
+
+### Actualizar un alumno (200)
+PUT {{url}}/alumnos/2
+Content-Type: application/json
+
+{
+  "nombre": "Patricio Estrella",
+  "notas": [8, 9, 10]
+}
+
+### Actualizar un alumno conservando su propio nombre (200)
+PUT {{url}}/alumnos/2
+Content-Type: application/json
+
+{
+  "nombre": "Patricio Estrella",
+  "notas": [6, 6, 6]
+}
+
+### Actualizar usando el nombre de otro alumno (409)
+PUT {{url}}/alumnos/2
+Content-Type: application/json
+
+{
+  "nombre": "Arenita Mejillas",
+  "notas": [6, 6, 6]
+}
+
+### Actualizar un alumno inexistente (404)
+PUT {{url}}/alumnos/999
+Content-Type: application/json
+
+{
+  "nombre": "Don Cangrejo",
+  "notas": [6, 6, 6]
+}
+
+### Actualizar con id invalido (400)
+PUT {{url}}/alumnos/2s
+Content-Type: application/json
+
+{
+  "nombre": "Don Cangrejo",
+  "notas": [6, 6, 6]
+}
+
+### Actualizar con notas invalidas (400)
+PUT {{url}}/alumnos/2
+Content-Type: application/json
+
+{
+  "nombre": "Patricio Estrella",
+  "notas": [20, 6, 6]
+}
+
+### Actualizar sin body (400)
+PUT {{url}}/alumnos/2
+Content-Type: application/json
+
+### Eliminar un alumno (200)
+DELETE {{url}}/alumnos/1
+
+### Eliminar el mismo alumno otra vez (404)
+DELETE {{url}}/alumnos/1
+
+### Eliminar con id invalido (400)
+DELETE {{url}}/alumnos/2s
